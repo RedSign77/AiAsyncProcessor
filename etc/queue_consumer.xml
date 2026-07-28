@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:AppData/etc/queue_consumer.xsd">
+    <consumer name="webtechsolutions.ai.task.consumer"
+              queue="ai.task.process"
+              connection="amqp"
+              handler="WebtechSolutions\AiAsyncProcessor\Model\Queue\Consumer::process"/>
+    <consumer name="webtechsolutions.ai.task.dlq.consumer"
+              queue="ai.task.process.dlq"
+              connection="amqp"
+              handler="WebtechSolutions\AiAsyncProcessor\Model\Queue\DlqConsumer::process"/>
+</config>

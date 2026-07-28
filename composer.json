@@ -1,0 +1,29 @@
+{
+    "name": "webtechsolutions/module-ai-async-processor",
+    "description": "Generic asynchronous AI task processing infrastructure (RabbitMQ/AMQP) for Magento 2, decoupling synchronous AI API calls from the HTTP request-response cycle.",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "proprietary"
+    ],
+    "authors": [
+        {
+            "name": "Zoltán Németh",
+            "email": "info@webtech-solutions.hu",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "magento/framework": "*",
+        "magento/module-message-queue": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "WebtechSolutions\\AiAsyncProcessor\\": ""
+        }
+    }
+}

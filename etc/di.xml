@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Virtual logger -->
+    <virtualType name="WebtechSolutions\AiAsyncProcessor\Logger\Virtual"
+                 type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="name" xsi:type="string">aiasyncprocessor</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">WebtechSolutions\AiAsyncProcessor\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="WebtechSolutions\AiAsyncProcessor\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+
+    <!-- Inject virtual logger into Consumer / DlqConsumer, configure retry limit -->
+    <type name="WebtechSolutions\AiAsyncProcessor\Model\Queue\Consumer">
+        <arguments>
+            <argument name="logger" xsi:type="object">WebtechSolutions\AiAsyncProcessor\Logger\Virtual</argument>
+            <argument name="maxRetries" xsi:type="number">3</argument>
+        </arguments>
+    </type>
+    <type name="WebtechSolutions\AiAsyncProcessor\Model\Queue\DlqConsumer">
+        <arguments>
+            <argument name="logger" xsi:type="object">WebtechSolutions\AiAsyncProcessor\Logger\Virtual</argument>
+        </arguments>
+    </type>
+
+    <!-- Extensible TaskPool: consumer modules merge additional items into this array via their own di.xml -->
+    <type name="WebtechSolutions\AiAsyncProcessor\Model\TaskPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array"/>
+        </arguments>
+    </type>
+
+</config>

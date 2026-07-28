@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:MessageQueue/etc/queue_publisher.xsd">
+    <publisher topic="ai.task.process">
+        <connection name="amqp" exchange="magento" disabled="false"/>
+        <connection name="db" exchange="magento.default" disabled="true"/>
+    </publisher>
+</config>

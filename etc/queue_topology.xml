@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:MessageQueue/etc/queue_topology.xsd">
+    <exchange name="magento" type="topic" connection="amqp">
+        <binding id="AiTaskBinding"
+                 topic="ai.task.process"
+                 destinationType="queue"
+                 destination="ai.task.process">
+            <arguments>
+                <argument name="x-dead-letter-exchange" xsi:type="string">magento-ai-dlx</argument>
+                <argument name="x-dead-letter-routing-key" xsi:type="string">ai.task.process.dlq</argument>
+            </arguments>
+        </binding>
+    </exchange>
+    <exchange name="magento-ai-dlx" type="topic" connection="amqp">
+        <binding id="AiTaskDlqBinding"
+                 topic="ai.task.process.dlq"
+                 destinationType="queue"
+                 destination="ai.task.process.dlq"/>
+    </exchange>
+</config>
